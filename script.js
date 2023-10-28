@@ -37,7 +37,7 @@ init();
 
 // find Winner
 const findWinner = function (activePlayer) {
-  if (totalScores[activePlayer] >= 20) {
+  if (totalScores[activePlayer] >= 100) {
     //finish the game
     playing = false;
     document
