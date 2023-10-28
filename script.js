@@ -18,7 +18,22 @@ score0EL.textContent = 0;
 score1EL.textContent = 0;
 diceEl.classList.add('hidden');
 let active = 0,
-  currentScore = 0;
+  currentScore = 0,
+  playing = true;
+
+// find Winner
+const findWinner = function (activePlayer) {
+  if (totalScores[activePlayer] >= 20) {
+    //finish the game
+    playing = false;
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.add('player--winner');
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.remove('player--active');
+  }
+};
 
 // change player function
 const changePlayer = function () {
@@ -58,23 +73,31 @@ let randomDice = function (activePlayer) {
 
 // btn roll click
 btnRollEl.addEventListener('click', function () {
-  randomDice(active);
+  if (playing) {
+    randomDice(active);
+  }
 });
 
 // btn hold click
 btnHoldEl.addEventListener('click', function () {
-  updateScore(active);
-  changePlayer();
+  if (playing) {
+    updateScore(active);
+    findWinner(active);
+    changePlayer();
+  }
 });
 
 // btn new click
 btnNewEl.addEventListener('click', function () {
   totalScores[0] = 0;
   totalScores[1] = 0;
+  document.querySelector(`.player--winner`).classList.remove('player--winner');
   changePlayer();
   currentScore = 0;
   current0EL.textContent = 0;
   current1EL.textContent = 0;
   score0EL.textContent = 0;
   score1EL.textContent = 0;
+
+  playing = true;
 });
