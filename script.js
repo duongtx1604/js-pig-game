@@ -37,6 +37,7 @@ init();
 
 // find Winner
 const findWinner = function (activePlayer) {
+  // 1. Check if player's score is >= 100
   if (totalScores[activePlayer] >= 100) {
     //finish the game
     playing = false;
@@ -61,15 +62,17 @@ const changePlayer = function () {
 // update current to score function
 const updateScore = function (activePlayer) {
   totalScores[activePlayer] += currentScore;
+  // scores[1] = scores[1] + currentScore
   document.getElementById(`score--${active}`).textContent =
     totalScores[activePlayer];
 };
 
 // random dice function
 let randomDice = function (activePlayer) {
+  // 1. Generating a random dice roll
   let roll = Math.trunc(Math.random() * 6) + 1;
 
-  //   update dice
+  // 2. Display dice
   diceEl.src = `dice-${roll}.png`;
   if (diceEl.classList.contains('hidden')) {
     diceEl.classList.remove('hidden');
@@ -97,6 +100,7 @@ btnHoldEl.addEventListener('click', function () {
   if (playing) {
     updateScore(active);
     findWinner(active);
+    // Switch to next player
     changePlayer();
   }
 });
